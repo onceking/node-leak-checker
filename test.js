@@ -1,4 +1,5 @@
 var prof = require('v8-profiler');
+var fs = require('fs');
 var leak = require('./leak');
 
 var last_samples = null;
@@ -8,9 +9,7 @@ function update_samples(samples){
 
 function stamp(name){
     prof.getHeapStats(update_samples, function(){});
-    console.log(
-	name + ',' + last_samples.join(',')
-    );
+    fs.writeSync(1, name + ',' + last_samples.join(',') + '\n');
 }
 
 prof.startTrackingHeapObjects();
