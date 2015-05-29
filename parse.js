@@ -1,3 +1,5 @@
+var BUCKET_MIN_IDX = 1;
+
 var readline = require('readline');
 var rl = readline.createInterface({
   input: process.stdin,
@@ -30,7 +32,7 @@ rl.on('close', function(){
     var leaks_by_label = [];
     var label_map = {};
 
-    for(var i=0; i<buckets.length; ++i){
+    for(var i=BUCKET_MIN_IDX; i<buckets.length; ++i){
 	var b = buckets[i];
 	if(b !== undefined && b[b.length-1].size !== 0){
 	    if(label_map[b[0].label] === undefined){
