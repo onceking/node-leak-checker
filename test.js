@@ -1,31 +1,13 @@
 var prof = require('v8-profiler');
 var leak = require('./leak');
 
-function gc_age(){
-    var ss = [];
-    var n = 1 << 14;
-    while(n > 0){
-	var s = '' + Math.random();
-	ss.push(s);
-	n -= s.length;
-    }
-}
-function gc(){
-    gc_age();
-    global.gc();
-}
-
-
 var last_samples = null;
 function update_samples(samples){
     last_samples = samples;
 }
 
 function stamp(name){
-    gc();
     prof.getHeapStats(update_samples, function(){});
-
-    //fs.appendFileSync(
     console.log(
 	name + ',' + last_samples.join(',')
     );
