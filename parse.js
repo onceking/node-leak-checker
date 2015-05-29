@@ -49,7 +49,7 @@ rl.on('close', function(){
 	    var l = leaks_by_label[i];
 	    var b0 = buckets[l[0]][0];
 
-	    console.log('** ' + b0.label);
+	    console.log('*** ' + b0.label);
 
 	    for(var j=0; j<l.length; ++j){
 		var bs = buckets[l[j]];
@@ -58,7 +58,7 @@ rl.on('close', function(){
 		for(var k=0; k<bs.length; ++k){
 		    var b = bs[k];
 		    console.log(
-			'**** @' + b.label +
+			'    @' + b.label +
 			    '  COUNT: ' + b.count + '/' + (b.count - count) +
 			    '  SIZE: ' + b.size + '/' + (b.size - size)
 		    );
