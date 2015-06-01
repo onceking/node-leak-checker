@@ -2,6 +2,8 @@ var fs = require('fs');
 var readline = require('readline');
 var parser = require('heapsnapshot-parser');
 
+var path = process.argv[2];
+
 function arr2map(arr){
     var map = {};
     for(var i=0; i<arr.length; ++i){
@@ -20,7 +22,7 @@ var NON_LEAKABLE_NAME_MAP = arr2map([
 var NON_LEAKABLE_TYPE_MAP = arr2map(['code', 'hidden']);
 
 
-var heap = parser.parse(fs.readFileSync('/tmp/hd.heapsnapshot', {encoding: "utf-8"}));
+var heap = parser.parse(fs.readFileSync(path + '.heapsnapshot', {encoding: "utf-8"}));
 var buckets = [];
 
 function heap_objs_by_range(from, to){
@@ -34,7 +36,7 @@ function heap_objs_by_range(from, to){
     return nodes;
 }
 
-var lines = fs.readFileSync('/tmp/a').toString().split("\n");
+var lines = fs.readFileSync(path + '.log').toString().split("\n");
 var last_heap_id = -1;
 for(var li=0; li<lines.length; ++li){
     var l = lines[li];
