@@ -1,4 +1,5 @@
 var prof = require('v8-profiler');
+var heapdump = require('heapdump');
 var fs = require('fs');
 var leak = require('./leak');
 
@@ -8,8 +9,8 @@ function update_samples(samples){
 }
 
 function stamp(name){
-    prof.getHeapStats(update_samples, function(){});
-    fs.writeSync(1, name + ',' + last_samples.join(',') + '\n');
+    var last = prof.getHeapStats(update_samples, function(){});
+    fs.writeSync(1, name + ',' + last + ','  + last_samples.join(',') + '\n');
 }
 
 prof.startTrackingHeapObjects();
@@ -24,3 +25,5 @@ for(var i=0; i<20; ++i){
     leak.leak(100);
     stamp('post-leak' + i);
 }
+
+heapdump.writeSnapshot('/tmp/hd')
